@@ -94,7 +94,7 @@ class hashtable_sc{
     int put(int k);
     // erase
     int erase(int k);
-    // need linear probing
+    // need separate chaining
     int collision();
 
 };
@@ -112,7 +112,7 @@ int hashtable_sc::collision(){return collisions;}
 
 int hashtable_sc::h(int k){return k % N;}
 
-// implement find
+//  find
 
 // put
 
