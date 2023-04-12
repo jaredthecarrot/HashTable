@@ -6,21 +6,77 @@
 
 std::list<int> list;
 
-class hashtable{
+class hashtable_lp{
     private:
     int table[N];
+    int n;
+    int collisions;
     public:
-    hashtable();
+    int size();
+    hashtable_lp();
     int h(int k);
     // find
+    int find(int k);
     // put
+    int put(int k);
     // erase
-    // need linear probing and chaining
-    // requires linked list for chaining
-    // count collisions
+    int erase(int k);
+    // need linear probing
+    int collision();
 
 };
 
-int h(int k){return k % N;}
+hashtable_lp::hashtable_lp(){
+    for (int i = 0; i < N; i++)
+        table[i] = NULL;
+    n = 0;
+    collisions = 0;
+}
+
+int hashtable_lp::size(){return n;}
+
+int hashtable_lp::collision(){return collisions;}
+
+int hashtable_lp::h(int k){return k % N;}
+
+int hashtable_lp::find(int k){
+    int i = h(k);
+    int p = 0;
+    for (p; p < N; p++){
+        if (table[i] == k)
+            return i;
+        else
+            i = (i + 1) % N;
+        return NULL;
+    }
+    return 0;
+}
+
+int hashtable_lp::put(int k){
+    int i = h(k);
+    int p = 0;
+    for (p; p < N; p++){
+        if (!table[i]){
+            table[i] = k;
+            n++;
+            return i;
+        }
+        else
+            i = (i + 1) % N;
+            collisions++;
+    }
+    return 0;
+}
+
+int hashtable_lp::erase(int k){
+    int i = find(k);
+    if (i == NULL)
+        return NULL;
+    else{
+        table[i] = NULL;
+        n--;
+        return i;
+    }
+}
 
 #endif
