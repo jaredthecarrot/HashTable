@@ -4,7 +4,39 @@
 #include <cstdlib>
 #include <list>
 
-std::list<int> list;
+class Node{
+    public:
+    int data;
+    Node* next;
+};
+
+class LinkedList{
+    private:
+    Node *head, *tail;
+    public:
+    LinkedList();
+    void addNode(int val);
+};
+
+LinkedList::LinkedList(){
+    head = nullptr;
+    tail = nullptr;
+}
+
+void LinkedList::addNode(int val){
+    Node *temp = new Node();
+    temp->data = val;
+    temp->next = nullptr;
+    if (head == nullptr){
+        head = temp;
+        tail = temp;
+        temp = nullptr;
+    }
+    else{
+        tail->next = temp;
+        tail = temp;
+    }
+}
 
 class hashtable_lp{
     private:
@@ -15,13 +47,9 @@ class hashtable_lp{
     int size();
     hashtable_lp();
     int h(int k);
-    // find
     int find(int k);
-    // put
     int put(int k);
-    // erase
     int erase(int k);
-    // need linear probing
     int collision();
 
 };
@@ -81,27 +109,21 @@ int hashtable_lp::erase(int k){
 
 class hashtable_sc{
     private:
-    int table[N];
+    //table?
     int n;
     int collisions;
     public:
     int size();
     hashtable_sc();
     int h(int k);
-    // find
     int find(int k);
-    // put
     int put(int k);
-    // erase
     int erase(int k);
-    // need separate chaining
     int collision();
 
 };
 
 hashtable_sc::hashtable_sc(){
-    for (int i = 0; i < N; i++)
-        table[i] = NULL;
     n = 0;
     collisions = 0;
 }
@@ -112,9 +134,15 @@ int hashtable_sc::collision(){return collisions;}
 
 int hashtable_sc::h(int k){return k % N;}
 
-//  find
+int hashtable_sc::find(int k){
+    return NULL;
+}
 
-// put
+int hashtable_sc::put(int k){
+    return NULL;
+}
 
-// erase
+int hashtable_sc::erase(int k){
+    return NULL;
+}
 #endif
