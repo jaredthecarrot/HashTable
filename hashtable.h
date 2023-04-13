@@ -4,40 +4,6 @@
 #include <cstdlib>
 #include <list>
 
-class Node{
-    public:
-    int data;
-    Node* next;
-};
-
-class LinkedList{
-    private:
-    Node *head, *tail;
-    public:
-    LinkedList();
-    void addNode(int val);
-};
-
-LinkedList::LinkedList(){
-    head = nullptr;
-    tail = nullptr;
-}
-
-void LinkedList::addNode(int val){
-    Node *temp = new Node();
-    temp->data = val;
-    temp->next = nullptr;
-    if (head == nullptr){
-        head = temp;
-        tail = temp;
-        temp = nullptr;
-    }
-    else{
-        tail->next = temp;
-        tail = temp;
-    }
-}
-
 class hashtable_lp{
     private:
     int table[N];
@@ -109,7 +75,7 @@ int hashtable_lp::erase(int k){
 
 class hashtable_sc{
     private:
-    //table?
+    std::list<int> table[N]; // list 1, index 0, list 2, index 1, etc.
     int n;
     int collisions;
     public:
@@ -135,14 +101,32 @@ int hashtable_sc::collision(){return collisions;}
 int hashtable_sc::h(int k){return k % N;}
 
 int hashtable_sc::find(int k){
+    int i = h(k);
+    // iterate through the table[i] list to see if k is in the list
+    for (std::list<int>::iterator it = table[i].begin(); it != table[i].end(); it++){
+        if (*it == k)
+            return i;
+    }
     return NULL;
 }
 
 int hashtable_sc::put(int k){
-    return NULL;
+    int i = h(k);
+    if (!table[i].empty())
+        collisions++;
+    table[i].push_back(k);
+    n++;
+    return i;
 }
 
 int hashtable_sc::erase(int k){
-    return NULL;
+    int i = find(k);
+    if (i == NULL)
+        return NULL;
+    else{
+        table[i].remove(k);
+        n--;
+        return i;
+    }
 }
 #endif
